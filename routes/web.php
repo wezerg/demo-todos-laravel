@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\PostController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -27,3 +28,5 @@ Route::delete('/remove/post/{id?}', [PostController::class, "removePost"])->name
 Route::get('/update/post/{id?}', [PostController::class, "update"]);
 Route::put('/update/post/{id?}', [PostController::class, "updatePost"])->name('updatePost');
 Route::put('/update/post/{id?}/picture', [PostController::class, "updatePicturePost"])->name('updatePicturePost');
+Route::post('add/comment/{id?}', [CommentController::class, 'insertComment'])->name('insertComment');
+Route::delete('/remove/comment/{id?}', [CommentController::class, "removeComment"])->name('removeComment');

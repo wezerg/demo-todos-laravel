@@ -24,18 +24,35 @@
                 <form method="post" action="{{route('removePost', $post->id)}}">
                     @csrf
                     @method('DELETE')
-                    <button class="btn btn-danger my-2" href="{{route('removePost', $post->id)}}">Supprimer article</button>
+                    <button class="btn btn-danger my-2">Supprimer article</button>
                 </form>
             </div>
         </div>
         <div class="row">
             <div class="col-12">
-                <h2>Commentaires</h2>
-                <p>Nombre de commentaire : {{sizeof($post->getComments)}}</p>
-                @foreach ($post->getComments as $comment)
-                    <p>{{$comment->content}}</p>
-                @endforeach
+                <form class="d-flex justify-content-between" action="{{route('insertComment', $post->id)}}" method="POST">
+                    @csrf
+                    <div>
+                        <label for="" class="d-block mb-2">Ajouter un commentaire</label>
+                        <input type="text" name="content" id="" required>
+                    </div>
+                    <button class="btn btn-success" value="submit">Créer</button>
+                </form>
             </div>
+            <div class="col-12">
+                <h2>Commentaires</h2>
+                <p>Nombre de commentaire(s) : {{sizeof($post->getComments)}}</p>
+            </div>
+            @foreach ($post->getComments as $comment)
+                <div class="col-12 d-flex p-3 justify-content-between" style="background: rgba( 231, 231, 231 , 0.5)">
+                    <p class="my-auto">{{$comment->content}}</p>
+                    <form action="{{route('removeComment', $comment->id)}}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button class="btn btn-danger">Supprimer</button>
+                    </form>
+                </div>
+            @endforeach
         </div>
     @else
         <p>Il n'y a aucun article</p>
